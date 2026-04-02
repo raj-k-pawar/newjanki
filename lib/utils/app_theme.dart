@@ -133,7 +133,7 @@ class AppTheme {
         hintStyle: GoogleFonts.poppins(color: AppColors.textLight, fontSize: 14),
         labelStyle: GoogleFonts.poppins(color: AppColors.textMedium, fontSize: 14),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: AppColors.cardBg,
         elevation: 4,
         shadowColor: Colors.black.withOpacity(0.1),
