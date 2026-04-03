@@ -38,7 +38,7 @@ workflows:
 
       ios_signing:
         distribution_type: app_store   # change to ad_hoc if needed
-        bundle_identifier: com.your.app   # 🔴 CHANGE THIS
+        bundle_identifier: com.jankiagrotourism.app   # 🔴 CHANGE THIS
 
     scripts:
       - name: Clean & Get packages
