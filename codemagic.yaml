@@ -3,39 +3,59 @@ workflows:
   android-workflow:
     name: Android Debug APK
     max_build_duration: 60
+
     environment:
       flutter: stable
       java: 17
+
     scripts:
       - name: Set up local.properties
         script: |
           echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
+
       - name: Get Flutter packages
         script: flutter pub get
+
       - name: Build APK
         script: flutter build apk --debug
+
       - name: Build AAB
         script: flutter build appbundle --debug
+
     artifacts:
       - build/**/outputs/**/*.apk
       - build/**/outputs/**/*.aab
 
+
   ios-workflow:
-    name: iOS Debug Build
+    name: iOS Release IPA
     max_build_duration: 60
+
     environment:
       flutter: stable
       xcode: latest
       cocoapods: default
+
+      ios_signing:
+        distribution_type: app_store   # change to ad_hoc if needed
+        bundle_identifier: com.your.app   # 🔴 CHANGE THIS
+
     scripts:
-      - name: Get Flutter packages
-        script: flutter pub get
+      - name: Clean & Get packages
+        script: |
+          flutter clean
+          flutter pub get
+
       - name: Install CocoaPods
         script: |
-          find . -name "Podfile" -execdir pod install \;
-      - name: Build iOS (no codesign)
+          cd ios
+          pod install
+          cd ..
+
+      - name: Build IPA
         script: |
-          flutter build ios --debug --no-codesign
+          flutter build ipa --release
+
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
